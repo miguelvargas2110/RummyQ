@@ -24,8 +24,8 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'com.example.rummyq'
-    mainClass = 'com.example.rummyq.HelloApplication'
+    mainModule = 'co.uniquindio.rummy'
+    mainClass = 'co.uniquindio.rummy.HelloApplication'
 }
 
 javafx {
