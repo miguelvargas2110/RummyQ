@@ -4,24 +4,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Tablero {
-    private static ArrayList<ArrayList<Pieza>> piezasEnTablero = new ArrayList<ArrayList<Pieza>>();
+    private ArrayList<ArrayList<Pieza>> piezasEnTablero = new ArrayList<ArrayList<Pieza>>();
 
-    public static ArrayList<ArrayList<Pieza>> getPiezasEnTablero() {
+    public ArrayList<ArrayList<Pieza>> getPiezasEnTablero() {
         return piezasEnTablero;
     }
 
-    public static void nuevaFusion(ArrayList<Pieza> fusion){
-        Collections.sort(fusion);
-        piezasEnTablero.add(fusion);
-
+    public void nuevBajacion(ArrayList<Pieza> bajar){
+        Collections.sort(bajar);
+        piezasEnTablero.add(bajar);
     }
 
-    public static void addToMeld(ArrayList<Pieza> toAdd, int tableCardIndex){
-        ArrayList<Pieza> addCardsHere = piezasEnTablero.remove(tableCardIndex);
-        for (Pieza p : toAdd) {
-            addCardsHere.add(p);
+    public void añadirABajacion(ArrayList<Pieza> alQueAñade, int posicion){
+        ArrayList<Pieza> añadir = piezasEnTablero.remove(posicion);
+        for (Pieza p : alQueAñade) {
+            añadir.add(p);
         }
-        Collections.sort(addCardsHere);
-        piezasEnTablero.add(addCardsHere);
+        Collections.sort(añadir);
+        piezasEnTablero.add(añadir);
     }
 }

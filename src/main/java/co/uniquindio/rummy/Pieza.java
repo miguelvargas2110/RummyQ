@@ -18,13 +18,13 @@ public class Pieza implements Comparable<Pieza> {
         return valor;
     }
 
+    //Metodo para pasar de objeto a string y asi imprimirlo
     public String toString(){
         String shortRankString = this.valor.getShortString();
-        char suit = this.color.getSimbolo();
+        char simbolo = this.color.getSimbolo();
         String color = this.color.getColor();
         String defaultColor = "\u001B[0m";
-
-        return color + shortRankString + suit + defaultColor;
+        return color + shortRankString + simbolo + defaultColor;
     }
     public int compareTo(Pieza otraPieza) {
         if (this.valor.getValor() < otraPieza.valor.getValor()) {

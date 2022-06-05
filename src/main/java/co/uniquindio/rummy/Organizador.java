@@ -17,11 +17,14 @@ public class Organizador {
         return this.piezas.get(index);
     }
 
+    //añadir una pieza al organizador
     public void anadirPieza(Pieza pieza) {
         this.piezas.add(pieza);
     }
+
+    //añadir una pieza al organizador
     public void Remove(Pieza pieza) {
-        piezas.remove(pieza);
+        this.piezas.remove(pieza);
     }
 
     public void setPiezas(ArrayList<Pieza> piezas){
