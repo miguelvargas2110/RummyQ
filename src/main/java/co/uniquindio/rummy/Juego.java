@@ -220,25 +220,23 @@ public class Juego {
                     this.yaAñadio = false;
                     bajarse(bajar);
                     if(seBajoPC == true){
+                        this.segundoTurnoPC = true;
                         break;
                     }else{
                         tomarPieza(organizadores.get(1).getPiezas(), piezas);
+                        break;
                     }
                 } else if(segundoTurnoPC==true && seBajoPC==false){
                     this.yaAñadio = false;
-                    System.out.println("Cual sera su siguiente movimiento? \n1- Tomar Pieza\n2- Bajarse\n3- Añadir pieza");
-                    eleccion = comprobarEleccion(3);
-                    if (eleccion == 1) {
-                        tomarPieza(organizadores.get(0).getPiezas(), piezas);
-                        turno = false;
-                        this.tOE = 0;
-                    } else if (eleccion==2) {
-                        while (yaAñadio == false){
-                            bajarse(bajar);
-                        }
-                    } else {
-                        ArrayList<Pieza> añadirA = new ArrayList<Pieza>();
-                        añadirAPiezasTablero(añadirA);
+                    ArrayList<Pieza> añadirA = new ArrayList<Pieza>();
+                    añadirAPiezasTablero(añadirA);
+                    bajarse(bajar);
+                    if(seBajoPC == true){
+                        this.segundoTurnoPC = true;
+                        break;
+                    }else{
+                        tomarPieza(organizadores.get(1).getPiezas(), piezas);
+                        break;
                     }
                 }
             }
@@ -285,43 +283,7 @@ public class Juego {
         }
         else{
             for(int i = 0; i < organizadores.get(1).getPiezas().size(); i++){
-                añadirToE(organizadores.get(1).getPieza(i), bajar, 1, organizadores.get(1));
-                int cantidadAñadio = this.bajar.size();
-                this.yaAñadio = false;
-                for(int j = i; j < organizadores.get(1).getPiezas().size(); j++){
-                    if(organizadores.get(1).getPieza(j).getValor().getValor() != bajar.get(0).getValor().getValor()){
-                        if(yaAñadio == true){
-                             i--;
-                             bajar.clear();
-                            break;
-                        }else{
-                            i += bajar.size() - 1;
-                            if (!bajar.isEmpty()) {
-                                for (Pieza p : bajar) {
-                                    organizadores.get(1).anadirPieza(p);
-                                }
-                                Collections.sort(organizadores.get(1).getPiezas());
-                                bajar.clear();
-                            }
-                            break;
-                        }
-
-                    }
-                    añadirToE(organizadores.get(1).getPieza(j), bajar, 1, organizadores.get(1));
-                    if(cantidadAñadio != (indice+1)){
-                        cantidadAñadio += 1;
-                        j--;
-                    }
-                }
-            }
-            if (!bajar.isEmpty()) {
-                for (Pieza p : bajar) {
-                    organizadores.get(1).anadirPieza(p);
-                }
-                Collections.sort(organizadores.get(1).getPiezas());
-                bajar.clear();
-            }
-            for(int i = 0; i < organizadores.get(1).getPiezas().size(); i++){
+                bajar = new ArrayList<Pieza>();
                 añadirToE(organizadores.get(1).getPieza(i), bajar, 2, organizadores.get(1));
                 int cantidadAñadio = this.bajar.size();
                 this.yaAñadio = false;
@@ -341,7 +303,6 @@ public class Juego {
                         }
                         añadirToE(organizadores.get(1).getPieza(j), bajar, 2, organizadores.get(1));
                         if(yaAñadio == true){
-                            bajar.clear();
                             break;
                         }
                         if((j+1) == organizadores.get(1).getPiezas().size()){
@@ -370,6 +331,43 @@ public class Juego {
                     }
                 }
             }
+            if (!bajar.isEmpty()) {
+                for (Pieza p : bajar) {
+                    organizadores.get(1).anadirPieza(p);
+                }
+                Collections.sort(organizadores.get(1).getPiezas());
+                bajar.clear();
+            }
+            for(int i = 0; i < organizadores.get(1).getPiezas().size(); i++){
+                bajar = new ArrayList<Pieza>();
+                añadirToE(organizadores.get(1).getPieza(i), bajar, 1, organizadores.get(1));
+                int cantidadAñadio = this.bajar.size();
+                this.yaAñadio = false;
+                for(int j = i; j < organizadores.get(1).getPiezas().size(); j++){
+                    if(organizadores.get(1).getPieza(j).getValor().getValor() != bajar.get(0).getValor().getValor()){
+                        if(yaAñadio == true){
+                            i--;
+                            break;
+                        }else{
+                            i += bajar.size() - 1;
+                            if (!bajar.isEmpty()) {
+                                for (Pieza p : bajar) {
+                                    organizadores.get(1).anadirPieza(p);
+                                }
+                                Collections.sort(organizadores.get(1).getPiezas());
+                                bajar.clear();
+                            }
+                            break;
+                        }
+
+                    }
+                    añadirToE(organizadores.get(1).getPieza(j), bajar, 1, organizadores.get(1));
+                    if(cantidadAñadio != (indice+1)){
+                        cantidadAñadio += 1;
+                        j--;
+                    }
+                }
+            }
         }
     }
 
@@ -394,7 +392,7 @@ public class Juego {
             }
             if (añadiendo.size() == 3) {
                 this.yaAñadio = true;
-                    tablero.nuevBajacion(añadiendo);
+                tablero.nuevBajacion(añadiendo);
                 this.seBajo = true;
                 this.seBajoPC = true;
                 this.tOE = 0;
@@ -419,46 +417,74 @@ public class Juego {
     }
 
     public void añadirAPiezasTablero(ArrayList<Pieza> añadirA){
-        int cancelar = 0;
-        int cancelar2 = 0;
-        String input = "";
+        if(turno == true) {
+            int cancelar = 0;
+            int cancelar2 = 0;
+            String input = "";
 
-        for (int i = 0; i < tablero.getPiezasEnTablero().size() ; i++) {
-            input += (i +1) + "- " + tablero.getPiezasEnTablero().get(i) + ", \n";
-        }
-        cancelar = tablero.getPiezasEnTablero().size() + 1;
-        System.out.println("Escoja a que terna o escalera desea añadir la pieza: ");
-        System.out.println("Si quiere cancelar digite la opcion " + cancelar);
-        System.out.println(input);
-        eleccion = comprobarEleccion(tablero.getPiezasEnTablero().size() + 1);
-        int eleccion2 = eleccion;
-        input = "";
-        for (int i = 1; i <= organizadores.get(0).getPiezas().size(); i++) {
-            input += i + "-" + organizadores.get(0).getPieza(i - 1).toString() + ", ";
-        }
-        cancelar2 = organizadores.get(0).getPiezas().size() + 1;
-
-        if(eleccion2 == cancelar){
-
-        }else {
-            System.out.println("Escoja la pieza que quiere añadir");
+            for (int i = 0; i < tablero.getPiezasEnTablero().size(); i++) {
+                input += (i + 1) + "- " + tablero.getPiezasEnTablero().get(i) + ", \n";
+            }
+            cancelar = tablero.getPiezasEnTablero().size() + 1;
+            System.out.println("Escoja a que terna o escalera desea añadir la pieza: ");
             System.out.println("Si quiere cancelar digite la opcion " + cancelar);
-            System.out.println(tablero.getPiezasEnTablero().get(eleccion2-1));
             System.out.println(input);
-            eleccion = comprobarEleccion(organizadores.get(0).getPiezas().size() + 1);
-            añadirA.add(organizadores.get(0).getPieza(eleccion-1));
-            organizadores.get(0).Remove(añadirA.get(0));
-            if (eleccion == cancelar2) {
+            eleccion = comprobarEleccion(tablero.getPiezasEnTablero().size() + 1);
+            int eleccion2 = eleccion;
+            input = "";
+            for (int i = 1; i <= organizadores.get(0).getPiezas().size(); i++) {
+                input += i + "-" + organizadores.get(0).getPieza(i - 1).toString() + ", ";
+            }
+            cancelar2 = organizadores.get(0).getPiezas().size() + 1;
+
+            if (eleccion2 == cancelar) {
 
             } else {
-                if (añadirA.get(0).getValor() == tablero.getPiezasEnTablero().get(eleccion2 - 1).get(0).getValor()) {
-                    tablero.añadirABajacion(añadirA, eleccion2 - 1);
-                    this.añadio = true;
-                } else if (añadirA.get(0).getValor().getValor() - tablero.getPiezasEnTablero().get(eleccion2 - 1).get(0).getValor().getValor() == -1
-                        || añadirA.get(0).getValor().getValor() - tablero.getPiezasEnTablero().get(eleccion2 - 1).get(tablero.getPiezasEnTablero().get(eleccion2 - 1).size() - 1).getValor().getValor() == 1
-                        && añadirA.get(0).getColor().getColor() == tablero.getPiezasEnTablero().get(eleccion2 - 1).get(0).getColor().getColor()) {
-                    tablero.añadirABajacion(añadirA, eleccion2 - 1);
-                    this.añadio = true;
+                System.out.println("Escoja la pieza que quiere añadir");
+                System.out.println("Si quiere cancelar digite la opcion " + cancelar);
+                System.out.println(tablero.getPiezasEnTablero().get(eleccion2 - 1));
+                System.out.println(input);
+                eleccion = comprobarEleccion(organizadores.get(0).getPiezas().size() + 1);
+                añadirA.add(organizadores.get(0).getPieza(eleccion - 1));
+                organizadores.get(0).Remove(añadirA.get(0));
+                if (eleccion == cancelar2) {
+
+                } else {
+                    if (añadirA.get(0).getValor().getValor() == tablero.getPiezasEnTablero().get(eleccion2 - 1).get(0).getValor().getValor()
+                        && añadirA.get(0).getValor().getValor() == tablero.getPiezasEnTablero().get(eleccion2 - 1).get(tablero.getPiezasEnTablero().get(eleccion2 - 1).size() - 1).getValor().getValor()
+                        && añadirA.get(0).getColor().getColor() != tablero.getPiezasEnTablero().get(eleccion2 - 1).get(0).getColor().getColor() && añadirA.get(0).getColor().getColor() == tablero.getPiezasEnTablero().get(eleccion2 - 1).get(tablero.getPiezasEnTablero().get(eleccion2 - 1).size() - 1).getColor().getColor()) {
+                        tablero.añadirABajacion(añadirA, eleccion2 - 1);
+                        this.añadio = true;
+                    } else if (añadirA.get(0).getValor().getValor() - tablero.getPiezasEnTablero().get(eleccion2 - 1).get(0).getValor().getValor() == -1
+                            || añadirA.get(0).getValor().getValor() - tablero.getPiezasEnTablero().get(eleccion2 - 1).get(tablero.getPiezasEnTablero().get(eleccion2 - 1).size() - 1).getValor().getValor() == 1
+                            && añadirA.get(0).getColor().getColor() == tablero.getPiezasEnTablero().get(eleccion2 - 1).get(0).getColor().getColor()) {
+                        tablero.añadirABajacion(añadirA, eleccion2 - 1);
+                        this.añadio = true;
+                    }
+                }
+            }
+        }else{
+            for(int i = 0; i < tablero.getPiezasEnTablero().size(); i++){
+                for(int j = 0; j < organizadores.get(1).getPiezas().size(); j++){
+                    añadirA.add(organizadores.get(1).getPieza(j));
+                    if (añadirA.get(0).getValor().getValor() == tablero.getPiezasEnTablero().get(i).get(0).getValor().getValor()
+                            && añadirA.get(0).getValor().getValor() == tablero.getPiezasEnTablero().get(i).get(tablero.getPiezasEnTablero().get(i).size() - 1).getValor().getValor()
+                        && añadirA.get(0).getColor().getColor() != tablero.getPiezasEnTablero().get(i).get(0).getColor().getColor()) {
+                        tablero.añadirABajacion(añadirA, i);
+                        j--;
+                        //this.añadio = true;
+                    } else if ((añadirA.get(0).getColor() == tablero.getPiezasEnTablero().get(i).get(0).getColor()
+                            && añadirA.get(0).getColor() == tablero.getPiezasEnTablero().get(i).get(tablero.getPiezasEnTablero().get(i).size() - 1).getColor())
+                            && (añadirA.get(0).getValor().getValor() - tablero.getPiezasEnTablero().get(i).get(0).getValor().getValor() == -1
+                            || añadirA.get(0).getValor().getValor() - tablero.getPiezasEnTablero().get(i).get(tablero.getPiezasEnTablero().get(i).size() - 1).getValor().getValor() == 1)
+                            ) {
+                        tablero.añadirABajacion(añadirA, i);
+                        j--;
+                        //this.añadio = true;
+                    }
+                    if (!añadirA.isEmpty()) {
+                        añadirA.clear();
+                    }
                 }
             }
         }

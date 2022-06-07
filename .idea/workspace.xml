@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="877e2836-963b-4e95-b739-28633302e9db" name="Changes" comment="maquina a medio terminar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Colores.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Colores.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Juego.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Juego.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/JugadorMaquina.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/JugadorMaquina.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Tablero.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Tablero.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654472284058</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="maquina a medio terminar">
+      <created>1654599344399</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1654599344399</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -143,10 +147,14 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Juego.java</url>
-          <line>174</line>
-          <option name="timeStamp" value="4" />
+          <line>418</line>
+          <properties class="co.uniquindio.rummy.Juego" method="añadirAPiezasTablero">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
