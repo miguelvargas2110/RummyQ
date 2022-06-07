@@ -1,10 +1,10 @@
 package co.uniquindio.rummy;
 
 public enum Colores {
-    ROJO((char)9632, "\u001B[31m"),
-    AZUL((char)9632, "\u001B[34m"),
-    AMARILLO((char)9632,"\u001B[33m"),
-    NEGRO((char)9632, "\u001B[30m");
+    ROJO((char)9632, "\u001B[31m"), //(char)9632 en teoria es un cuadrado mientra que \u001B[31m es rojo
+    AZUL((char)9632, "\u001B[34m"), //(char)9632 en teoria es un cuadrado mientra que \u001B[31m es azul
+    AMARILLO((char)9632,"\u001B[33m"), //(char)9632 en teoria es un cuadrado mientra que \u001B[31m es amarillo
+    NEGRO((char)9632, "\u001B[30m"); //(char)9632 en teoria es un cuadrado mientra que \u001B[31m es negro
 
     private char Simbolo;
     private String Color;

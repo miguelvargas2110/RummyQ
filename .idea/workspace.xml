@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="877e2836-963b-4e95-b739-28633302e9db" name="Changes" comment="clases creadas">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="877e2836-963b-4e95-b739-28633302e9db" name="Changes" comment="maquina a medio terminar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Colores.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Colores.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Juego.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Juego.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/JugadorHumano.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/JugadorHumano.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Organizador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Organizador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Pieza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Pieza.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/JugadorMaquina.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/JugadorMaquina.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Tablero.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Tablero.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,13 +64,12 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;C:/Users/Usuario/IdeaProjects/RummyQ/src/main/java/co/uniquindio/rummy&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Usuario/IdeaProjects/RummyQ&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;fileTemplates&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;copyright&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -117,7 +113,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654382484587</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Logica lista, sin tener en cuenta lo de poder dividir las ternas y escaleras">
+      <created>1654472284058</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1654472284058</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,25 +136,24 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="clases creadas" />
-    <option name="LAST_COMMIT_MESSAGE" value="clases creadas" />
+    <MESSAGE value="Logica lista, sin tener en cuenta lo de poder dividir las ternas y escaleras" />
+    <MESSAGE value="maquina a medio terminar" />
+    <option name="LAST_COMMIT_MESSAGE" value="maquina a medio terminar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/co/uniquindio/rummy/Juego.java</url>
-          <line>228</line>
-          <properties class="co.uniquindio.rummy.Juego" method="añadirToE">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="1" />
+          <line>174</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="GradleRunConfiguration">
         <watch expression="tablero.piezasEnTablero" />
+        <watch expression="organizadores" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
