@@ -1,7 +1,5 @@
 package co.uniquindio.rummy;
 
-import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -22,7 +20,7 @@ public class Juego {
 
     private int eleccion;
 
-    private Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
     private boolean seBajo = false;
 
@@ -47,27 +45,8 @@ public class Juego {
     private ArrayList<Pieza> bajar;
     private String mensaje2;
 
-    private int computadora = 0;
-
     public Juego() {
         organizadores = new ArrayList<>();
-    }
-
-    public Tablero getTablero() {
-        return tablero;
-    }
-
-    public ArrayList<Organizador> getOrganizadores() {
-        return organizadores;
-    }
-
-
-    public void setOrganizadores(ArrayList<Organizador> organizadores) {
-        this.organizadores = organizadores;
-    }
-
-    public void setTablero(Tablero tablero) {
-        this.tablero = tablero;
     }
 
     //Metodo para crear los organizadores tanto para la maquina como para el jugador junto con las 14 fichas
@@ -121,27 +100,25 @@ public class Juego {
         int piezaEscogida = (int) (Math.random() * piezas.size());
         piezasJugador.add(piezas.get(piezaEscogida));
         piezas.remove(piezaEscogida);
-        if(turno == false){
+        if (!turno) {
             Collections.sort(organizadores.get(1).getPiezas());
         }
     }
 
-    public ArrayList<Pieza> getPiezas() {
-        return this.piezas;
-    }
-
+    //metodo para jugar mientras que no haya un ganador, una vez haya un ganador el juego finalizara
     public void jugar() {
         crearPiezas();
         crearOrganizadores();
-        while (this.isGanador == false) {
+        while (!this.isGanador) {
             turno = true;
             while (turno) {
                 System.out.println("Piezas en el tablero: " + tablero.getPiezasEnTablero());
                 System.out.println("Tus piezas: " + organizadores.get(0).getPiezas().toString());
+                //System.out.println("Piezas maquina: " + organizadores.get(1).getPiezas().toString());
                 bajar = new ArrayList<Pieza>();
                 this.seBajo = false;
                 this.añadio = false;
-                if (this.seBajo == false && segundoTurno==false) {
+                if (this.seBajo == false && segundoTurno == false) {
                     this.yaAñadio = false;
                     System.out.println("Cual sera su siguiente movimiento? \n1-Tomar Pieza\n2-Bajarse");
                     eleccion = comprobarEleccion(2);
@@ -150,11 +127,11 @@ public class Juego {
                         turno = false;
                         this.tOE = 0;
                     } else {
-                        while (yaAñadio == false){
+                        while (!yaAñadio) {
                             bajarse(bajar);
                         }
                     }
-                } else if(segundoTurno==true && seBajo==false){
+                } else if (segundoTurno == true && seBajo == false) {
                     this.yaAñadio = false;
                     System.out.println("Cual sera su siguiente movimiento? \n1- Tomar Pieza\n2- Bajarse\n3- Añadir pieza");
                     eleccion = comprobarEleccion(3);
@@ -162,8 +139,8 @@ public class Juego {
                         tomarPieza(organizadores.get(0).getPiezas(), piezas);
                         turno = false;
                         this.tOE = 0;
-                    } else if (eleccion==2) {
-                        while (yaAñadio == false){
+                    } else if (eleccion == 2) {
+                        while (yaAñadio == false) {
                             bajarse(bajar);
                         }
                     } else {
@@ -172,10 +149,11 @@ public class Juego {
                         this.yaAñadio = true;
                     }
                 }
-                while(seBajo == true || añadio == true){
-                    if(seBajo == true && segundoTurno==false) {
+                while (seBajo == true || añadio == true) {
+                    if (seBajo == true && segundoTurno == false) {
                         System.out.println("Piezas en el tablero: " + tablero.getPiezasEnTablero());
                         System.out.println("Tus piezas: " + organizadores.get(0).getPiezas().toString());
+                        //System.out.println("Piezas maquina: " + organizadores.get(1).getPiezas().toString());
                         bajar = new ArrayList<Pieza>();
                         System.out.println("Cual sera su siguiente movimiento? \n1- Bajarse\n2- Finalizar Turno");
                         eleccion = comprobarEleccion(3);
@@ -189,21 +167,22 @@ public class Juego {
                             segundoTurno = true;
                             seBajo = false;
                         }
-                    }else if (segundoTurno==true) {
+                    } else if (segundoTurno == true) {
                         System.out.println("Piezas en el tablero: " + tablero.getPiezasEnTablero());
                         System.out.println("Tus piezas: " + organizadores.get(0).getPiezas().toString());
+                        //System.out.println("Piezas maquina: " + organizadores.get(1).getPiezas().toString());
                         bajar = new ArrayList<Pieza>();
                         this.yaAñadio = false;
                         System.out.println("Cual sera su siguiente movimiento? \n1- Bajarse\n2- Añadir pieza\n3- Finalizar Turno");
                         eleccion = comprobarEleccion(3);
-                        if (eleccion==1) {
-                            while (yaAñadio == false){
+                        if (eleccion == 1) {
+                            while (yaAñadio == false) {
                                 bajarse(bajar);
                             }
-                        } else if(eleccion == 2) {
+                        } else if (eleccion == 2) {
                             ArrayList<Pieza> añadirA = new ArrayList<Pieza>();
                             añadirAPiezasTablero(añadirA);
-                        }else{
+                        } else {
                             turno = false;
                             seBajo = false;
                             añadio = false;
@@ -211,39 +190,49 @@ public class Juego {
                         }
                     }
                 }
-
             }
-            while(turno == false){
+            if (organizadores.get(0).getPiezas().isEmpty()) {
+                isGanador = true;
+                System.out.println("Felicidades, eres el ganador");
+                break;
+            }
+            while (turno == false) {
                 bajar = new ArrayList<Pieza>();
                 this.seBajoPC = false;
-                if (this.seBajoPC == false && segundoTurnoPC ==false) {
+                if (this.seBajoPC == false && segundoTurnoPC == false) {
                     this.yaAñadio = false;
                     bajarse(bajar);
-                    if(seBajoPC == true){
+                    if (seBajoPC == true) {
                         this.segundoTurnoPC = true;
                         break;
-                    }else{
+                    } else {
                         tomarPieza(organizadores.get(1).getPiezas(), piezas);
                         break;
                     }
-                } else if(segundoTurnoPC==true && seBajoPC==false){
+                } else if (segundoTurnoPC == true && seBajoPC == false) {
                     this.yaAñadio = false;
                     ArrayList<Pieza> añadirA = new ArrayList<Pieza>();
                     añadirAPiezasTablero(añadirA);
                     bajarse(bajar);
-                    if(seBajoPC == true){
+                    if (seBajoPC == true) {
                         this.segundoTurnoPC = true;
                         break;
-                    }else{
+                    } else {
                         tomarPieza(organizadores.get(1).getPiezas(), piezas);
                         break;
                     }
                 }
             }
+            if (organizadores.get(1).getPiezas().isEmpty()) {
+                isGanador = true;
+                System.out.println("la computadora ha ganado, suerte con tu proxima ronda");
+                break;
+            }
         }
     }
 
-    public void bajarse(ArrayList<Pieza> bajar){
+    //Metodo para bajarse, este sirve tanto para la maquina como para el jugador
+    public void bajarse(ArrayList<Pieza> bajar) {
         if (turno == true) {
             int cancelar = organizadores.get(0).getPiezas().size() + 1;
             if (this.tOE == 0) {
@@ -280,18 +269,17 @@ public class Juego {
             } else {
                 añadirToE(organizadores.get(0).getPieza(eleccion - 1), bajar, tOE, organizadores.get(0));
             }
-        }
-        else{
-            for(int i = 0; i < organizadores.get(1).getPiezas().size(); i++){
+        } else {
+            for (int i = 0; i < organizadores.get(1).getPiezas().size(); i++) {
                 bajar = new ArrayList<Pieza>();
                 añadirToE(organizadores.get(1).getPieza(i), bajar, 2, organizadores.get(1));
                 int cantidadAñadio = this.bajar.size();
                 this.yaAñadio = false;
-                for(int j = i; j < organizadores.get(1).getPiezas().size(); j++){
-                    if(organizadores.get(1).getPieza(j).getValor().getValor() == bajar.get(indice).getValor().getValor()){
+                for (int j = i; j < organizadores.get(1).getPiezas().size(); j++) {
+                    if (organizadores.get(1).getPieza(j).getValor().getValor() == bajar.get(indice).getValor().getValor()) {
                         //No hace nada :D
-                    }else{
-                        if(organizadores.get(1).getPieza(j).getValor().getValor() - bajar.get(indice).getValor().getValor() >= 2){
+                    } else {
+                        if (organizadores.get(1).getPieza(j).getValor().getValor() - bajar.get(indice).getValor().getValor() >= 2) {
                             if (!bajar.isEmpty()) {
                                 for (Pieza p : bajar) {
                                     organizadores.get(1).anadirPieza(p);
@@ -302,10 +290,10 @@ public class Juego {
                             break;
                         }
                         añadirToE(organizadores.get(1).getPieza(j), bajar, 2, organizadores.get(1));
-                        if(yaAñadio == true){
+                        if (yaAñadio == true) {
                             break;
                         }
-                        if((j+1) == organizadores.get(1).getPiezas().size()){
+                        if ((j + 1) == organizadores.get(1).getPiezas().size()) {
                             if (!bajar.isEmpty()) {
                                 for (Pieza p : bajar) {
                                     organizadores.get(1).anadirPieza(p);
@@ -315,13 +303,13 @@ public class Juego {
                             }
                             break;
                         }
-                        if(cantidadAñadio != (indice+1)){
+                        if (cantidadAñadio != (indice + 1)) {
                             cantidadAñadio += 1;
                             j--;
                         }
                     }
                 }
-                if(yaAñadio == false){
+                if (yaAñadio == false) {
                     if (!bajar.isEmpty()) {
                         for (Pieza p : bajar) {
                             organizadores.get(1).anadirPieza(p);
@@ -338,17 +326,17 @@ public class Juego {
                 Collections.sort(organizadores.get(1).getPiezas());
                 bajar.clear();
             }
-            for(int i = 0; i < organizadores.get(1).getPiezas().size(); i++){
+            for (int i = 0; i < organizadores.get(1).getPiezas().size(); i++) {
                 bajar = new ArrayList<Pieza>();
                 añadirToE(organizadores.get(1).getPieza(i), bajar, 1, organizadores.get(1));
                 int cantidadAñadio = this.bajar.size();
                 this.yaAñadio = false;
-                for(int j = i; j < organizadores.get(1).getPiezas().size(); j++){
-                    if(organizadores.get(1).getPieza(j).getValor().getValor() != bajar.get(0).getValor().getValor()){
-                        if(yaAñadio == true){
+                for (int j = i; j < organizadores.get(1).getPiezas().size(); j++) {
+                    if (organizadores.get(1).getPieza(j).getValor().getValor() != bajar.get(0).getValor().getValor()) {
+                        if (yaAñadio == true) {
                             i--;
                             break;
-                        }else{
+                        } else {
                             i += bajar.size() - 1;
                             if (!bajar.isEmpty()) {
                                 for (Pieza p : bajar) {
@@ -362,15 +350,23 @@ public class Juego {
 
                     }
                     añadirToE(organizadores.get(1).getPieza(j), bajar, 1, organizadores.get(1));
-                    if(cantidadAñadio != (indice+1)){
+                    if (cantidadAñadio != (indice + 1)) {
                         cantidadAñadio += 1;
                         j--;
                     }
                 }
             }
+            if (!bajar.isEmpty()) {
+                for (Pieza p : bajar) {
+                    organizadores.get(1).anadirPieza(p);
+                }
+                Collections.sort(organizadores.get(1).getPiezas());
+                bajar.clear();
+            }
         }
     }
 
+    //Metodo para añadir ya sea una terna o una escalera al tablero
     public void añadirToE(Pieza p, ArrayList<Pieza> añadiendo, int tOE, Organizador jugador) {
         if (añadiendo.isEmpty()) {
             añadiendo.add(p);
@@ -399,8 +395,8 @@ public class Juego {
             }
         } else if (tOE == 2) {
             if (p.getValor().getValor() - añadiendo.get(indice).getValor().getValor() == -1
-                || p.getValor().getValor() - añadiendo.get(indice).getValor().getValor() == 1
-                && p.getColor().getColor() == añadiendo.get(0).getColor().getColor()){
+                    || p.getValor().getValor() - añadiendo.get(indice).getValor().getValor() == 1
+                    && p.getColor().getColor() == añadiendo.get(0).getColor().getColor()) {
                 añadiendo.add(p);
                 jugador.Remove(p);
                 this.indice += 1;
@@ -416,10 +412,11 @@ public class Juego {
         }
     }
 
-    public void añadirAPiezasTablero(ArrayList<Pieza> añadirA){
-        if(turno == true) {
-            int cancelar = 0;
-            int cancelar2 = 0;
+    //Metodo para añadir piezas a jugadas que ya esten en el tablero
+    public void añadirAPiezasTablero(ArrayList<Pieza> añadirA) {
+        if (turno == true) {
+            int cancelar;
+            int cancelar2;
             String input = "";
 
             for (int i = 0; i < tablero.getPiezasEnTablero().size(); i++) {
@@ -451,8 +448,10 @@ public class Juego {
 
                 } else {
                     if (añadirA.get(0).getValor().getValor() == tablero.getPiezasEnTablero().get(eleccion2 - 1).get(0).getValor().getValor()
-                        && añadirA.get(0).getValor().getValor() == tablero.getPiezasEnTablero().get(eleccion2 - 1).get(tablero.getPiezasEnTablero().get(eleccion2 - 1).size() - 1).getValor().getValor()
-                        && añadirA.get(0).getColor().getColor() != tablero.getPiezasEnTablero().get(eleccion2 - 1).get(0).getColor().getColor() && añadirA.get(0).getColor().getColor() == tablero.getPiezasEnTablero().get(eleccion2 - 1).get(tablero.getPiezasEnTablero().get(eleccion2 - 1).size() - 1).getColor().getColor()) {
+                            && añadirA.get(0).getValor().getValor() == tablero.getPiezasEnTablero().get(eleccion2 - 1).get(tablero.getPiezasEnTablero().get(eleccion2 - 1).size() - 1).getValor().getValor()
+                            && añadirA.get(0).getColor() != tablero.getPiezasEnTablero().get(eleccion2 - 1).get(0).getColor() && añadirA.get(0).getColor() != tablero.getPiezasEnTablero().get(eleccion2 - 1).get(tablero.getPiezasEnTablero().get(eleccion2 - 1).size() - 1).getColor()
+                            && añadirA.get(0).getColor() != tablero.getPiezasEnTablero().get(eleccion2 - 1).get(1).getColor()
+                            && tablero.getPiezasEnTablero().get(eleccion2 - 1).size() != 4) {
                         tablero.añadirABajacion(añadirA, eleccion2 - 1);
                         this.añadio = true;
                     } else if (añadirA.get(0).getValor().getValor() - tablero.getPiezasEnTablero().get(eleccion2 - 1).get(0).getValor().getValor() == -1
@@ -460,16 +459,25 @@ public class Juego {
                             && añadirA.get(0).getColor().getColor() == tablero.getPiezasEnTablero().get(eleccion2 - 1).get(0).getColor().getColor()) {
                         tablero.añadirABajacion(añadirA, eleccion2 - 1);
                         this.añadio = true;
+                    } else {
+                        if (!añadirA.isEmpty()) {
+                            for (Pieza p : añadirA) {
+                                organizadores.get(0).anadirPieza(p);
+                            }
+                            añadirA.clear();
+                        }
                     }
                 }
             }
-        }else{
-            for(int i = 0; i < tablero.getPiezasEnTablero().size(); i++){
-                for(int j = 0; j < organizadores.get(1).getPiezas().size(); j++){
+        } else {
+            for (int i = 0; i < tablero.getPiezasEnTablero().size(); i++) {
+                for (int j = 0; j < organizadores.get(1).getPiezas().size(); j++) {
                     añadirA.add(organizadores.get(1).getPieza(j));
                     if (añadirA.get(0).getValor().getValor() == tablero.getPiezasEnTablero().get(i).get(0).getValor().getValor()
                             && añadirA.get(0).getValor().getValor() == tablero.getPiezasEnTablero().get(i).get(tablero.getPiezasEnTablero().get(i).size() - 1).getValor().getValor()
-                        && añadirA.get(0).getColor().getColor() != tablero.getPiezasEnTablero().get(i).get(0).getColor().getColor()) {
+                            && añadirA.get(0).getColor() != tablero.getPiezasEnTablero().get(i).get(0).getColor() && añadirA.get(0).getColor() != tablero.getPiezasEnTablero().get(i).get(tablero.getPiezasEnTablero().get(i).size() - 1).getColor()
+                            && añadirA.get(0).getColor() != tablero.getPiezasEnTablero().get(i).get(1).getColor()
+                            && tablero.getPiezasEnTablero().get(i).size() != 4) {
                         tablero.añadirABajacion(añadirA, i);
                         j--;
                         //this.añadio = true;
@@ -477,7 +485,7 @@ public class Juego {
                             && añadirA.get(0).getColor() == tablero.getPiezasEnTablero().get(i).get(tablero.getPiezasEnTablero().get(i).size() - 1).getColor())
                             && (añadirA.get(0).getValor().getValor() - tablero.getPiezasEnTablero().get(i).get(0).getValor().getValor() == -1
                             || añadirA.get(0).getValor().getValor() - tablero.getPiezasEnTablero().get(i).get(tablero.getPiezasEnTablero().get(i).size() - 1).getValor().getValor() == 1)
-                            ) {
+                    ) {
                         tablero.añadirABajacion(añadirA, i);
                         j--;
                         //this.añadio = true;
@@ -490,6 +498,7 @@ public class Juego {
         }
     }
 
+    //Metodo para comprobar si la eleccion del ususario es valida, de lo contrario debe ingresar un valor valido
     public int comprobarEleccion(int max) {
         while (true) {
             try {
